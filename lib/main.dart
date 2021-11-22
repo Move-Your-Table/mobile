@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        scaffoldBackgroundColor: const Color.fromRGBO(20, 33, 61, 1),
+        scaffoldBackgroundColor: const Color.fromRGBO(22, 26, 32, 1),
       ),
       home: const MyHomePage(title: 'MYT'),
     );
