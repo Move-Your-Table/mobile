@@ -76,7 +76,17 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[],
+          children: const <Widget>[
+            Text(
+              'Move Your Table',
+              textDirection: TextDirection.ltr,
+              style: TextStyle(
+                  fontSize: 32,
+                  color: Colors.white,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.bold),
+            )
+          ],
         ),
       ),
     );
