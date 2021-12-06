@@ -76,8 +76,16 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(top: 20.0),
+              child: const Image(
+                image: AssetImage('assets/myt_final.png'),
+                height: 150,
+                width: 150,
+              ),
+            ),
+            const Text(
               'Move Your Table',
               textDirection: TextDirection.ltr,
               style: TextStyle(
@@ -85,7 +93,56 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.white,
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.bold),
-            )
+            ),
+            const Padding(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    fillColor: Color.fromRGBO(40, 46, 59, 1),
+                    filled: true,
+                    labelStyle: TextStyle(color: Colors.grey),
+                    hintStyle: TextStyle(color: Colors.grey),
+                    labelText: 'User Name',
+                    hintText: 'Enter valid mail id as abc@gmail.com'),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                obscureText: true,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    fillColor: Color.fromRGBO(40, 46, 59, 1),
+                    filled: true,
+                    labelStyle: TextStyle(color: Colors.grey),
+                    hintStyle: TextStyle(color: Colors.grey),
+                    labelText: 'Password',
+                    hintText: 'Enter your secure password'),
+              ),
+            ),
+            Container(
+                margin: const EdgeInsets.all(25),
+                decoration: BoxDecoration(
+                    color: Colors.orange.shade900,
+                    borderRadius: BorderRadius.circular(5.0)),
+                width: double.infinity,
+                child: TextButton(
+                  child: const Text(
+                    "Sign In",
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () => {},
+                )),
+            TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Forgot Password?",
+                  style: TextStyle(color: Colors.grey),
+                ))
           ],
         ),
       ),
