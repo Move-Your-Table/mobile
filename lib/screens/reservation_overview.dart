@@ -57,6 +57,19 @@ class ReservationOverview extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(40, 40),
+                          maximumSize: const Size(40, 40),
+                          textStyle: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.red,
+                          ),
+                          primary: Colors.orange[600],
+                        ),
+                        onPressed: () {},
+                        child: const Text('>'),
+                      ),
                     ],
                   ),
                   Align(
@@ -96,15 +109,30 @@ class ReservationOverview extends StatelessWidget {
       backgroundColor: Color(0xFF161A20),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(28, 28, 28, 28),
-          child: Container(
-            height: 230,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[_reservationItem(), _reservationItem()],
-            ),
-          ),
-        ),
+            padding: EdgeInsetsDirectional.fromSTEB(28, 28, 28, 28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                  child: Text('Upcomming\nreservations',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
+                Container(
+                  height: 230,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[_reservationItem(), _reservationItem()],
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
