@@ -93,6 +93,7 @@ class ReservationOverview extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF161A20),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(28, 28, 28, 28),
