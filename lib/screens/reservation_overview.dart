@@ -109,7 +109,7 @@ class ReservationOverview extends StatelessWidget {
       backgroundColor: Color(0xFF161A20),
       body: SafeArea(
         child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(28, 28, 28, 28),
+            padding: EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
