@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:myt_mobile/services/http_service.dart';
 import 'package:myt_mobile/models/reservation.dart';
 import 'package:myt_mobile/models/building.dart';
+import 'package:myt_mobile/screens/reservation_details.dart';
 
 class ReservationOverview extends StatelessWidget {
   final HttpService httpService = HttpService();
   ReservationOverview({Key? key}) : super(key: key);
 
-  Widget _reservationItem(String startTime, int buildingId, String company) {
+  Widget _reservationItem(
+      String startTime, int buildingId, String company, BuildContext context) {
     return Container(
       width: 280,
       height: 220,
@@ -71,7 +73,13 @@ class ReservationOverview extends StatelessWidget {
                           ),
                           primary: Colors.orange[600],
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ReservationDetails()),
+                          );
+                        },
                         child: const Text('>'),
                       ),
                     ],
@@ -177,7 +185,8 @@ class ReservationOverview extends StatelessWidget {
                                             reservation.endTime.minute
                                           ].join(),
                                           reservation.buildingId,
-                                          reservation.reservedFor.company))
+                                          reservation.reservedFor.company,
+                                          context))
                                   .toList()),
                         ),
                       ],
