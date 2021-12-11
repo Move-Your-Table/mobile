@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ReservationDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFF161A20),
+        backgroundColor: const Color(0xFF161A20),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +20,7 @@ class ReservationDetails extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(28, 28, 28, 28),
+                padding: const EdgeInsetsDirectional.fromSTEB(28, 28, 28, 28),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,7 +68,7 @@ class ReservationDetails extends StatelessWidget {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [_bookingItem()],
+                      children: [_bookingItem(), _bookingItem()],
                     ),
                   ],
                 ),
@@ -92,27 +92,27 @@ class ReservationDetails extends StatelessWidget {
 
   Widget _bookingItem() {
     return Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+        padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
         child: Container(
           child: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(13, 13, 13, 13),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Text("Mo 23/10 ",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Nunito',
                         color: Colors.white,
                         fontSize: 15,
                       )),
                   Text("9:30 AM - 1:30 PM ",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Nunito',
                         color: Colors.white,
                         fontSize: 15,
                       )),
                   Text("Steffen Gemin",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Nunito',
                         color: Colors.white,
                         fontSize: 15,
@@ -120,7 +120,7 @@ class ReservationDetails extends StatelessWidget {
                 ],
               )),
           decoration: BoxDecoration(
-            color: Color(0xFF1E222D),
+            color: const Color(0xFF1E222D),
             boxShadow: const [
               BoxShadow(
                 color: Colors.transparent,
