@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myt_mobile/services/http_service.dart';
-import 'package:myt_mobile/models/reservation_model.dart';
+import 'package:myt_mobile/models/reservation.dart';
 
 class ReservationOverview extends StatelessWidget {
   final HttpService httpService = HttpService();

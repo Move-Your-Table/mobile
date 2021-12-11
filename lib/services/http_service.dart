@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:myt_mobile/models/reservation_model.dart';
+import 'package:myt_mobile/models/reservation.dart';
 
 class HttpService {
   //Android SDK uses 10.0.2.2 as link to host (localhost)
