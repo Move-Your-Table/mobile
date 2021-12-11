@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myt_mobile/services/http_service.dart';
 import 'package:myt_mobile/models/reservation.dart';
+import 'package:myt_mobile/models/building.dart';
 
 class ReservationOverview extends StatelessWidget {
   final HttpService httpService = HttpService();
   ReservationOverview({Key? key}) : super(key: key);
 
-  Widget _reservationItem(String startTime, String buildingId, String company) {
+  Widget _reservationItem(String startTime, int buildingId, String company) {
     return Container(
       width: 280,
       height: 220,
@@ -78,15 +79,27 @@ class ReservationOverview extends StatelessWidget {
                   Align(
                     alignment: AlignmentDirectional(-1, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                      child: Text(
-                        buildingId,
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Color(0xFF8A8D8F),
-                        ),
-                      ),
-                    ),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+                        child: FutureBuilder(
+                          future: httpService.getBuildingByID(buildingId),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Building> snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              Building building = snapshot.data as Building;
+                              return Text(
+                                building.name,
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFF8A8D8F),
+                                ),
+                              );
+                            }
+                          },
+                        )),
                   ),
                   Align(
                     alignment: AlignmentDirectional(-1, 0),
@@ -157,7 +170,7 @@ class ReservationOverview extends StatelessWidget {
                                             ":",
                                             reservation.endTime.minute
                                           ].join(),
-                                          reservation.buildingId.toString(),
+                                          reservation.buildingId,
                                           reservation.reservedFor.company))
                                   .toList()),
                         ),
