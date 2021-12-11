@@ -3,6 +3,7 @@ import 'package:http/http.dart';
 import 'package:myt_mobile/models/reservation_model.dart';
 
 class HttpService {
+  //Android SDK uses 10.0.2.2 as link to host (localhost)
   final String gatewayUrl = "http://10.0.2.2:8080/";
 
   Future<List<Reservation>> getReservations() async {
