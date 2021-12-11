@@ -67,6 +67,7 @@ class ReservationDetails extends StatelessWidget {
                           )),
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [_bookingItem()],
                     ),
                   ],
@@ -91,13 +92,42 @@ class ReservationDetails extends StatelessWidget {
 
   Widget _bookingItem() {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
-      child: Text("t",
-          style: TextStyle(
-            fontFamily: 'Nunito',
-            color: Colors.white,
-            fontSize: 15,
-          )),
-    );
+        padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+        child: Container(
+          child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(13, 13, 13, 13),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Mo 23/10 ",
+                      style: const TextStyle(
+                        fontFamily: 'Nunito',
+                        color: Colors.white,
+                        fontSize: 15,
+                      )),
+                  Text("9:30 AM - 1:30 PM ",
+                      style: const TextStyle(
+                        fontFamily: 'Nunito',
+                        color: Colors.white,
+                        fontSize: 15,
+                      )),
+                  Text("Steffen Gemin",
+                      style: const TextStyle(
+                        fontFamily: 'Nunito',
+                        color: Colors.white,
+                        fontSize: 15,
+                      ))
+                ],
+              )),
+          decoration: BoxDecoration(
+            color: Color(0xFF1E222D),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.transparent,
+              )
+            ],
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
   }
 }
