@@ -7,7 +7,7 @@ class ReservationOverview extends StatelessWidget {
   final HttpService httpService = HttpService();
   ReservationOverview({Key? key}) : super(key: key);
 
-  Widget _reservationItem(String test) {
+  Widget _reservationItem(String startTime, String buildingId, String company) {
     return Container(
       width: 280,
       height: 220,
@@ -52,7 +52,7 @@ class ReservationOverview extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        test,
+                        startTime,
                         style: TextStyle(
                           fontFamily: 'Nunito',
                           color: Colors.white,
@@ -80,7 +80,7 @@ class ReservationOverview extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
                       child: Text(
-                        'D1.001',
+                        buildingId,
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           color: Color(0xFF8A8D8F),
@@ -91,7 +91,7 @@ class ReservationOverview extends StatelessWidget {
                   Align(
                     alignment: AlignmentDirectional(-1, 0),
                     child: Text(
-                      'Building Howest Inc. ',
+                      company,
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         color: Color(0xFF8A8D8F),
@@ -146,7 +146,19 @@ class ReservationOverview extends StatelessWidget {
                               children: reservations
                                   .map((Reservation reservation) =>
                                       _reservationItem(
-                                          reservation.id.toString()))
+                                          [
+                                            reservation.endTime.day,
+                                            "/",
+                                            reservation.endTime.month,
+                                            " ",
+                                            "-",
+                                            " ",
+                                            reservation.endTime.hour,
+                                            ":",
+                                            reservation.endTime.minute
+                                          ].join(),
+                                          reservation.buildingId.toString(),
+                                          reservation.reservedFor.company))
                                   .toList()),
                         ),
                       ],
