@@ -4,8 +4,8 @@ class Reservation {
   final int id;
   final int buildingId;
   final int roomId;
-  final DateTime startTime;
-  final DateTime endTime;
+  final String startTime;
+  final String endTime;
   final Person reservedFor;
 
   Reservation(
@@ -23,6 +23,6 @@ class Reservation {
         roomId: json["roomId"],
         startTime: json["startTime"],
         endTime: json["endTime"],
-        reservedFor: json["reserved_for"]);
+        reservedFor: Person.fromJson(json["reserved_for"]));
   }
 }
