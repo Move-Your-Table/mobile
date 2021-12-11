@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/models/reservation.dart';
 
 class HttpService {
@@ -14,6 +15,18 @@ class HttpService {
       List<Reservation> reservations =
           body.map((dynamic item) => Reservation.fromJson(item)).toList();
       return reservations;
+    } else {
+      throw res.statusCode;
+    }
+  }
+
+  Future<Building> getBuildingByID(int id) async {
+    Response res =
+        await get(Uri.parse(gatewayUrl + "rest/buildings/" + id.toString()));
+    if (res.statusCode == 200) {
+      dynamic body = jsonDecode(res.body);
+      Building building = Building.fromJson(body);
+      return building;
     } else {
       throw res.statusCode;
     }
