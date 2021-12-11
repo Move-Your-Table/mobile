@@ -166,6 +166,12 @@ class ReservationOverview extends StatelessWidget {
                                             " ",
                                             "-",
                                             " ",
+                                            reservation.startTime.hour,
+                                            ":",
+                                            reservation.startTime.minute,
+                                            " ",
+                                            "-",
+                                            " ",
                                             reservation.endTime.hour,
                                             ":",
                                             reservation.endTime.minute
