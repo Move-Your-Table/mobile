@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myt_mobile/services/http_service.dart';
+import 'package:myt_mobile/models/reservation.dart';
+import 'package:myt_mobile/models/building.dart';
 
 class ReservationOverview extends StatelessWidget {
-  const ReservationOverview({Key? key}) : super(key: key);
+  final HttpService httpService = HttpService();
+  ReservationOverview({Key? key}) : super(key: key);
 
-  Widget _reservationItem() {
+  Widget _reservationItem(String startTime, int buildingId, String company) {
     return Container(
       width: 280,
       height: 220,
@@ -49,7 +53,7 @@ class ReservationOverview extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Hello World',
+                        startTime,
                         style: TextStyle(
                           fontFamily: 'Nunito',
                           color: Colors.white,
@@ -75,20 +79,32 @@ class ReservationOverview extends StatelessWidget {
                   Align(
                     alignment: AlignmentDirectional(-1, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                      child: Text(
-                        'D1.001',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Color(0xFF8A8D8F),
-                        ),
-                      ),
-                    ),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+                        child: FutureBuilder(
+                          future: httpService.getBuildingByID(buildingId),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Building> snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              Building building = snapshot.data as Building;
+                              return Text(
+                                building.name,
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFF8A8D8F),
+                                ),
+                              );
+                            }
+                          },
+                        )),
                   ),
                   Align(
                     alignment: AlignmentDirectional(-1, 0),
                     child: Text(
-                      'Building Howest Inc. ',
+                      company,
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         color: Color(0xFF8A8D8F),
@@ -104,36 +120,65 @@ class ReservationOverview extends StatelessWidget {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF161A20),
-      body: SafeArea(
-        child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                  child: Text('Upcomming\nreservations',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-                Container(
-                  height: 230,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[_reservationItem(), _reservationItem()],
-                  ),
-                ),
-              ],
-            )),
-      ),
-    );
+        backgroundColor: Color(0xFF161A20),
+        body: FutureBuilder(
+          future: httpService.getReservations(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<Reservation>> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              List<Reservation> reservations =
+                  snapshot.data as List<Reservation>;
+              return SafeArea(
+                child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                          child: Text('Upcomming\nreservations',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                        Container(
+                          height: 230,
+                          child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: reservations
+                                  .map((Reservation reservation) =>
+                                      _reservationItem(
+                                          [
+                                            reservation.endTime.day,
+                                            "/",
+                                            reservation.endTime.month,
+                                            " ",
+                                            "-",
+                                            " ",
+                                            reservation.endTime.hour,
+                                            ":",
+                                            reservation.endTime.minute
+                                          ].join(),
+                                          reservation.buildingId,
+                                          reservation.reservedFor.company))
+                                  .toList()),
+                        ),
+                      ],
+                    )),
+              );
+            }
+          },
+        ));
   }
 }
