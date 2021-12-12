@@ -72,7 +72,7 @@ class ReservationOverview extends StatelessWidget {
                             fontSize: 20,
                             color: Colors.red,
                           ),
-                          primary: Colors.orange[600],
+                          primary: Colors.orange[800],
                         ),
                         onPressed: () {
                           Navigator.push(
