@@ -4,6 +4,7 @@ import 'package:myt_mobile/services/http_service.dart';
 import 'package:myt_mobile/models/reservation.dart';
 import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/screens/reservation_details.dart';
+import 'package:myt_mobile/screens/desks_overview.dart';
 
 class ReservationOverview extends StatelessWidget {
   final HttpService httpService = HttpService();
@@ -197,7 +198,10 @@ class ReservationOverview extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('FloatingActionButton pressed ...');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DesksOverview()),
+          );
         },
         backgroundColor: const Color(0xFF1E222D),
         elevation: 1,
