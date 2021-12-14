@@ -9,8 +9,8 @@ class ReservationOverview extends StatelessWidget {
   final HttpService httpService = HttpService();
   ReservationOverview({Key? key}) : super(key: key);
 
-  Widget _reservationItem(
-      String time, String buildingName, String company, BuildContext context) {
+  Widget _reservationItem(Reservation reservation, String time,
+      String buildingName, String company, BuildContext context) {
     return Container(
       width: 280,
       height: 280,
@@ -77,7 +77,9 @@ class ReservationOverview extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ReservationDetails()),
+                                builder: (context) => ReservationDetails(
+                                      reservation: reservation,
+                                    )),
                           );
                         },
                         child: const Text('>'),
@@ -153,6 +155,7 @@ class ReservationOverview extends StatelessWidget {
                               children: reservations
                                   .map((Reservation reservation) =>
                                       _reservationItem(
+                                          reservation,
                                           [
                                             reservation.endTime.day,
                                             "/",
