@@ -10,7 +10,7 @@ class HttpService {
 
   Future<List<Reservation>> getReservations() async {
     Response res =
-        await get(Uri.parse(gatewayUrl + "rest/reservations?userId=1"));
+        await get(Uri.parse(gatewayUrl + "rest/reservations?userId=3"));
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
       List<Reservation> reservations =

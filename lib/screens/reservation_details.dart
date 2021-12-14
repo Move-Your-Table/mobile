@@ -5,8 +5,11 @@ import 'package:myt_mobile/models/desk.dart';
 import 'package:myt_mobile/services/http_service.dart';
 
 class ReservationDetails extends StatelessWidget {
-  ReservationDetails({Key? key, required this.reservation}) : super(key: key);
+  ReservationDetails(
+      {Key? key, required this.reservation, required this.reservationTime})
+      : super(key: key);
   final Reservation reservation;
+  final String reservationTime;
   final HttpService httpService = HttpService();
 
   @override
@@ -47,6 +50,14 @@ class ReservationDetails extends StatelessWidget {
                             color: Color(0xFF8A8D8F),
                           )),
                     ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                      child: Text(reservation.room.name,
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Color(0xFF8A8D8F),
+                          )),
+                    ),
                     const Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 28, 0, 0),
                       child: Text('Features',
@@ -63,9 +74,7 @@ class ReservationDetails extends StatelessWidget {
                       builder:
                           (BuildContext context, AsyncSnapshot<Desk> snapshot) {
                         if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return CircularProgressIndicator();
                         } else {
                           Desk desk = snapshot.data as Desk;
                           return Column(
@@ -75,7 +84,18 @@ class ReservationDetails extends StatelessWidget {
                                   .toList());
                         }
                       },
-                    )
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 28, 0, 0),
+                      child: Text('Reservation timestamp:\n' + reservationTime,
+                          style: const TextStyle(
+                            fontFamily: 'Nunito',
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
                   ],
                 ),
               )
@@ -85,9 +105,9 @@ class ReservationDetails extends StatelessWidget {
   }
 
   Widget _featureItem(String feature) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
-      child: Text(feature,
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text("- " + feature,
           style: const TextStyle(
             fontFamily: 'Nunito',
             color: Colors.white,

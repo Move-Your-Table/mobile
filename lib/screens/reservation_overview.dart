@@ -78,8 +78,8 @@ class ReservationOverview extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ReservationDetails(
-                                      reservation: reservation,
-                                    )),
+                                    reservation: reservation,
+                                    reservationTime: time)),
                           );
                         },
                         child: const Text('>'),
@@ -167,7 +167,7 @@ class ReservationOverview extends StatelessWidget {
                                             ":",
                                             reservation.startTime.minute,
                                             " ",
-                                            "-",
+                                            "untill",
                                             " ",
                                             reservation.endTime.hour,
                                             ":",
