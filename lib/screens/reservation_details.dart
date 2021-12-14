@@ -95,45 +95,4 @@ class ReservationDetails extends StatelessWidget {
           )),
     );
   }
-
-  Widget _bookingItem() {
-    return Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-        child: Container(
-          child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(13, 13, 13, 13),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text("Mo 23/10 ",
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        color: Colors.white,
-                        fontSize: 15,
-                      )),
-                  Text("9:30 AM - 1:30 PM ",
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        color: Colors.white,
-                        fontSize: 15,
-                      )),
-                  Text("Steffen Gemin",
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        color: Colors.white,
-                        fontSize: 15,
-                      ))
-                ],
-              )),
-          decoration: BoxDecoration(
-            color: const Color(0xFF1E222D),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.transparent,
-              )
-            ],
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-  }
 }
