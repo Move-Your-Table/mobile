@@ -96,6 +96,27 @@ class ReservationDetails extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           )),
                     ),
+                    Container(
+                        alignment: Alignment.bottomCenter,
+                        margin:
+                            const EdgeInsetsDirectional.fromSTEB(0, 28, 0, 0),
+                        decoration: BoxDecoration(
+                            color: Colors.orange.shade900,
+                            borderRadius: BorderRadius.circular(5.0)),
+                        width: double.infinity,
+                        child: TextButton(
+                          child: const Text(
+                            "Cancel Reservation",
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () => {
+                            httpService.deleteReservation(reservation.id),
+                            Navigator.pop(context)
+                          },
+                        )),
                   ],
                 ),
               )
