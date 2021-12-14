@@ -8,6 +8,8 @@ class ReservationDetails extends StatelessWidget {
   ReservationDetails({Key? key, required this.reservation}) : super(key: key);
   final Reservation reservation;
   final HttpService httpService = HttpService();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFF161A20),
