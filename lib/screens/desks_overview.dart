@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myt_mobile/models/room.dart';
+import 'package:myt_mobile/models/desk.dart';
 import 'package:myt_mobile/services/http_service.dart';
 
 class DesksOverview extends StatelessWidget {
@@ -33,9 +32,27 @@ class DesksOverview extends StatelessWidget {
               children: rooms
                   .map((Room room) => Column(
                         children: [
-                          _roomCard(room.name),
-                          Column(
-                            children: [_deskCard()],
+                          _roomCard(room),
+                          FutureBuilder(
+                            future: httpService.getDesksFromRoom(
+                                buildingId, room.id),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<Desk>> deskSnapshot) {
+                              if (!deskSnapshot.hasData) {
+                                return const Text(
+                                  "Loading Desks...",
+                                  style: TextStyle(color: Colors.white),
+                                );
+                              } else {
+                                List<Desk> desks =
+                                    deskSnapshot.data as List<Desk>;
+                                return Column(
+                                  children: desks
+                                      .map((Desk desk) => _deskCard(desk))
+                                      .toList(),
+                                );
+                              }
+                            },
                           )
                         ],
                       ))
@@ -45,7 +62,7 @@ class DesksOverview extends StatelessWidget {
         });
   }
 
-  Widget _deskCard() {
+  Widget _deskCard(Desk desk) {
     return Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(28, 15, 28, 15),
         child: Container(
@@ -82,9 +99,9 @@ class DesksOverview extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Desk 666',
-                        style: TextStyle(
+                      Text(
+                        desk.name,
+                        style: const TextStyle(
                           fontFamily: 'Nunito',
                           color: Colors.white,
                           fontSize: 16,
@@ -126,7 +143,7 @@ class DesksOverview extends StatelessWidget {
         ));
   }
 
-  Widget _roomCard(String name) {
+  Widget _roomCard(Room room) {
     return Container(
         decoration: const BoxDecoration(
           color: Color(0xFF1E222D),
@@ -153,7 +170,7 @@ class DesksOverview extends StatelessWidget {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                         child: Text(
-                          name,
+                          room.name,
                           style: const TextStyle(
                             fontFamily: 'Nunito',
                             color: Colors.white,
@@ -162,11 +179,12 @@ class DesksOverview extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                         child: Text(
-                          'Hard-Code straat 71, 8000 Brugge',
-                          style: TextStyle(
+                          'Room Type: ' + room.type,
+                          style: const TextStyle(
                             fontFamily: 'Poppins',
                             color: Color(0xFF8A8D8F),
                           ),

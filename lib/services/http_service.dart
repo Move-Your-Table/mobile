@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/models/desk.dart';
-import 'package:myt_mobile/models/extendedmodels/extended_room.dart';
 import 'package:myt_mobile/models/room.dart';
 import 'package:myt_mobile/models/reservation.dart';
 
@@ -19,6 +19,23 @@ class HttpService {
       List<Reservation> reservations =
           body.map((dynamic item) => Reservation.fromJson(item)).toList();
       return reservations;
+    } else {
+      throw res.statusCode;
+    }
+  }
+
+  Future<List<Desk>> getDesksFromRoom(int buildingId, int roomId) async {
+    Response res = await get(Uri.parse(gatewayUrl +
+        "rest/building/" +
+        buildingId.toString() +
+        "/room/" +
+        roomId.toString() +
+        "/desks"));
+    if (res.statusCode == 200) {
+      List<dynamic> body = jsonDecode(res.body);
+      List<Desk> desks =
+          body.map((dynamic item) => Desk.fromJson(item)).toList();
+      return desks;
     } else {
       throw res.statusCode;
     }
