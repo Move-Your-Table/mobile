@@ -30,7 +30,6 @@ class DesksOverview extends StatelessWidget {
           } else {
             List<Room> rooms = snapshot.data as List<Room>;
             return Column(
-              //children: rooms.map((Room room) => _roomCard(room.name)).toList(),
               children: rooms
                   .map((Room room) => Column(
                         children: [
