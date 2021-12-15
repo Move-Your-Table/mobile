@@ -133,7 +133,7 @@ class ReservationOverview extends StatelessWidget {
             List<Reservation> reservations = snapshot.data as List<Reservation>;
             return SafeArea(
               child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
+                  padding: const EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
