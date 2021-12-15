@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DesksOverview extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFF161A20),
         body: SafeArea(
           child: Column(
-            children: [_roomCard(), _deskCard()],
+            children: [const Text("yo"), _roomCard(), _deskCard()],
           ),
         ));
   }
