@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/models/desk.dart';
+import 'package:myt_mobile/models/extendedmodels/extended_room.dart';
+import 'package:myt_mobile/models/room.dart';
 import 'package:myt_mobile/models/reservation.dart';
 
 class HttpService {
@@ -17,6 +19,19 @@ class HttpService {
       List<Reservation> reservations =
           body.map((dynamic item) => Reservation.fromJson(item)).toList();
       return reservations;
+    } else {
+      throw res.statusCode;
+    }
+  }
+
+  Future<List<Room>> getRoomsFromBuilding(int buildingId) async {
+    Response res = await get(Uri.parse(
+        gatewayUrl + "rest/building/" + buildingId.toString() + "/room"));
+    if (res.statusCode == 200) {
+      List<dynamic> body = jsonDecode(res.body);
+      List<Room> rooms =
+          body.map((dynamic item) => Room.fromJson(item)).toList();
+      return rooms;
     } else {
       throw res.statusCode;
     }
@@ -47,6 +62,7 @@ class HttpService {
       Desk desk = Desk.fromJson(body);
       return desk;
     } else {
+      log("oops");
       throw res.statusCode;
     }
   }
