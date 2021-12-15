@@ -10,11 +10,11 @@ class ReservationOverview extends StatelessWidget {
   final HttpService httpService = HttpService();
   ReservationOverview({Key? key}) : super(key: key);
 
-  Widget _reservationItem(
-      String startTime, int buildingId, String company, BuildContext context) {
+  Widget _reservationItem(Reservation reservation, String time,
+      String buildingName, String company, BuildContext context) {
     return Container(
       width: 280,
-      height: 220,
+      height: 280,
       margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
       decoration: BoxDecoration(
         color: const Color(0xFF1E222D),
@@ -56,7 +56,7 @@ class ReservationOverview extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        startTime,
+                        time,
                         style: const TextStyle(
                           fontFamily: 'Nunito',
                           color: Colors.white,
@@ -78,7 +78,9 @@ class ReservationOverview extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ReservationDetails()),
+                                builder: (context) => ReservationDetails(
+                                    reservation: reservation,
+                                    reservationTime: time)),
                           );
                         },
                         child: const Text('>'),
@@ -90,26 +92,11 @@ class ReservationOverview extends StatelessWidget {
                     child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                        child: FutureBuilder(
-                          future: httpService.getBuildingByID(buildingId),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<Building> snapshot) {
-                            if (!snapshot.hasData) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              Building building = snapshot.data as Building;
-                              return Text(
-                                building.name,
-                                style: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  color: Color(0xFF8A8D8F),
-                                ),
-                              );
-                            }
-                          },
-                        )),
+                        child: Text(buildingName,
+                            style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Color(0xFF8A8D8F),
+                            ))),
                   ),
                   Align(
                     alignment: const AlignmentDirectional(-1, 0),
@@ -120,7 +107,7 @@ class ReservationOverview extends StatelessWidget {
                         color: Color(0xFF8A8D8F),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

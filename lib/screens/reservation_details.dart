@@ -1,7 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myt_mobile/models/reservation.dart';
+import 'package:myt_mobile/models/desk.dart';
+import 'package:myt_mobile/services/http_service.dart';
 
 class ReservationDetails extends StatelessWidget {
+  ReservationDetails(
+      {Key? key, required this.reservation, required this.reservationTime})
+      : super(key: key);
+  final Reservation reservation;
+  final String reservationTime;
+  final HttpService httpService = HttpService();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFF161A20),
@@ -24,17 +35,25 @@ class ReservationDetails extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Desk 666',
-                        style: TextStyle(
+                    Text(reservation.desk.name,
+                        style: const TextStyle(
                           fontFamily: 'Nunito',
                           color: Colors.white,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         )),
-                    const Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                      child: Text("The Vibe | Howest",
-                          style: TextStyle(
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                      child: Text(reservation.building.name,
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Color(0xFF8A8D8F),
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                      child: Text(reservation.room.name,
+                          style: const TextStyle(
                             fontFamily: 'Poppins',
                             color: Color(0xFF8A8D8F),
                           )),
@@ -49,26 +68,33 @@ class ReservationDetails extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           )),
                     ),
-                    Column(
-                      children: [
-                        _featureItem("Test"),
-                        _featureItem("Test"),
-                        _featureItem("Test")
-                      ],
+                    FutureBuilder(
+                      future: httpService.getDeskById(reservation.building.id,
+                          reservation.room.id, reservation.desk.id),
+                      builder:
+                          (BuildContext context, AsyncSnapshot<Desk> snapshot) {
+                        if (!snapshot.hasData) {
+                          return CircularProgressIndicator();
+                        } else {
+                          Desk desk = snapshot.data as Desk;
+                          return Column(
+                              children: desk.features
+                                  .map(
+                                      (String feature) => _featureItem(feature))
+                                  .toList());
+                        }
+                      },
                     ),
-                    const Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 28, 0, 0),
-                      child: Text('Upcomming bookings',
-                          style: TextStyle(
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 28, 0, 0),
+                      child: Text('Reservation timestamp:\n' + reservationTime,
+                          style: const TextStyle(
                             fontFamily: 'Nunito',
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           )),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [_bookingItem(), _bookingItem()],
                     ),
                   ],
                 ),
@@ -79,55 +105,14 @@ class ReservationDetails extends StatelessWidget {
   }
 
   Widget _featureItem(String feature) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
-      child: Text(feature,
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text("- " + feature,
           style: const TextStyle(
             fontFamily: 'Nunito',
             color: Colors.white,
             fontSize: 15,
           )),
     );
-  }
-
-  Widget _bookingItem() {
-    return Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-        child: Container(
-          child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(13, 13, 13, 13),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text("Mo 23/10 ",
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        color: Colors.white,
-                        fontSize: 15,
-                      )),
-                  Text("9:30 AM - 1:30 PM ",
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        color: Colors.white,
-                        fontSize: 15,
-                      )),
-                  Text("Steffen Gemin",
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        color: Colors.white,
-                        fontSize: 15,
-                      ))
-                ],
-              )),
-          decoration: BoxDecoration(
-            color: const Color(0xFF1E222D),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.transparent,
-              )
-            ],
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
   }
 }
