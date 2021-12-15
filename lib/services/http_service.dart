@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/models/desk.dart';
@@ -47,6 +48,17 @@ class HttpService {
       return desk;
     } else {
       throw res.statusCode;
+    }
+  }
+
+  Future deleteReservation(int reservationId) async {
+    Response res = await delete(Uri.parse(
+        gatewayUrl + "rest/reservations/" + reservationId.toString()));
+    if (res.statusCode == 200) {
+      return res.statusCode;
+    } else {
+      log(res.request.toString());
+      log(res.statusCode.toString());
     }
   }
 }
