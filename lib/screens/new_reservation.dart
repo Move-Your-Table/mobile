@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myt_mobile/models/desk.dart';
 
 class NewReservation extends StatelessWidget {
+  const NewReservation({Key? key, required this.desk}) : super(key: key);
+  final Desk desk;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +25,23 @@ class NewReservation extends StatelessWidget {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(28, 28, 28, 28),
               child: Column(
-                children: const [
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    "Desk Title",
+                    desk.name,
+                    style: const TextStyle(
+                        fontFamily: 'Nunito',
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const Text(
+                    'Reserve Desk',
+                    textAlign: TextAlign.left,
                     style: TextStyle(
-                        fontFamily: 'Poppins', color: Color(0xFF8A8D8F)),
+                      fontFamily: 'Nunito',
+                      color: Color(0xFF8A8D8F),
+                    ),
                   ),
                 ],
               ),

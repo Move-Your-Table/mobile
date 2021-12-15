@@ -74,7 +74,7 @@ class ReservationDetails extends StatelessWidget {
                       builder:
                           (BuildContext context, AsyncSnapshot<Desk> snapshot) {
                         if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         } else {
                           Desk desk = snapshot.data as Desk;
                           return Column(

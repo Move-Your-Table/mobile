@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myt_mobile/models/room.dart';
 import 'package:myt_mobile/models/desk.dart';
+import 'package:myt_mobile/screens/new_reservation.dart';
 import 'package:myt_mobile/services/http_service.dart';
 
 class DesksOverview extends StatelessWidget {
@@ -14,11 +15,11 @@ class DesksOverview extends StatelessWidget {
         backgroundColor: const Color(0xFF161A20),
         body: SafeArea(
             child: SingleChildScrollView(
-          child: _roomCollection(1),
+          child: _roomCollection(1, context),
         )));
   }
 
-  Widget _roomCollection(int buildingId) {
+  Widget _roomCollection(int buildingId, BuildContext context) {
     return FutureBuilder(
         future: httpService.getRoomsFromBuilding(buildingId),
         builder: (BuildContext context, AsyncSnapshot<List<Room>> snapshot) {
@@ -48,7 +49,8 @@ class DesksOverview extends StatelessWidget {
                                     deskSnapshot.data as List<Desk>;
                                 return Column(
                                   children: desks
-                                      .map((Desk desk) => _deskCard(desk))
+                                      .map((Desk desk) =>
+                                          _deskCard(desk, context))
                                       .toList(),
                                 );
                               }
@@ -62,7 +64,7 @@ class DesksOverview extends StatelessWidget {
         });
   }
 
-  Widget _deskCard(Desk desk) {
+  Widget _deskCard(Desk desk, BuildContext context) {
     return Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(28, 15, 28, 15),
         child: Container(
@@ -71,70 +73,101 @@ class DesksOverview extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(0),
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(0),
-                ),
-                child: Image.network(
-                  'https://picsum.photos/seed/586/600',
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(0),
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(0),
+                    ),
+                    child: Image.network(
+                      'https://picsum.photos/seed/586/600',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(17, 0, 0, 0),
+                    child: Container(
+                      height: 100,
+                      decoration: const BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            desk.name,
+                            style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF22E95E),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  child: const Text(
+                                    'Available',
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFF161A20),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(17, 0, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
                 child: Container(
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        desk.name,
-                        style: const TextStyle(
-                          fontFamily: 'Nunito',
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.orange[800],
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: TextButton(
+                    child: const Text(
+                      ">",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22,
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 100,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF22E95E),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              alignment: const AlignmentDirectional(0, 0),
-                              child: const Text(
-                                'Available',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  color: Color(0xFF161A20),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  NewReservation(desk: desk)));
+                    },
                   ),
                 ),
               ),
