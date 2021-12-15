@@ -4,6 +4,7 @@ import 'package:myt_mobile/services/http_service.dart';
 import 'package:myt_mobile/models/reservation.dart';
 import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/screens/reservation_details.dart';
+import 'package:myt_mobile/screens/desks_overview.dart';
 
 class ReservationOverview extends StatelessWidget {
   final HttpService httpService = HttpService();
@@ -71,7 +72,7 @@ class ReservationOverview extends StatelessWidget {
                             fontSize: 20,
                             color: Colors.red,
                           ),
-                          primary: Colors.orange[600],
+                          primary: Colors.orange[800],
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -119,70 +120,80 @@ class ReservationOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFF161A20),
-        body: FutureBuilder(
-          future: httpService.getReservations(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<Reservation>> snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              List<Reservation> reservations =
-                  snapshot.data as List<Reservation>;
-              return SafeArea(
-                child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                          child: Text('Upcomming\nreservations',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontFamily: 'Nunito',
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                        SizedBox(
-                          height: 230,
-                          child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: reservations
-                                  .map((Reservation reservation) =>
-                                      _reservationItem(
-                                          reservation,
-                                          [
-                                            reservation.endTime.day,
-                                            "/",
-                                            reservation.endTime.month,
-                                            " ",
-                                            "-",
-                                            " ",
-                                            reservation.startTime.hour,
-                                            ":",
-                                            reservation.startTime.minute,
-                                            " ",
-                                            "until",
-                                            " ",
-                                            reservation.endTime.hour,
-                                            ":",
-                                            reservation.endTime.minute
-                                          ].join(),
-                                          reservation.building.name,
-                                          reservation.reservedFor.company,
-                                          context))
-                                  .toList()),
-                        ),
-                      ],
-                    )),
-              );
-            }
-          },
-        ));
+      backgroundColor: const Color(0xFF161A20),
+      body: FutureBuilder(
+        future: httpService.getReservations(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Reservation>> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            List<Reservation> reservations = snapshot.data as List<Reservation>;
+            return SafeArea(
+              child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                        child: Text('Upcomming\nreservations',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                      SizedBox(
+                        height: 230,
+                        child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: reservations
+                                .map((Reservation reservation) =>
+                                    _reservationItem(
+                                        [
+                                          reservation.endTime.day,
+                                          "/",
+                                          reservation.endTime.month,
+                                          " ",
+                                          "-",
+                                          " ",
+                                          reservation.startTime.hour,
+                                          ":",
+                                          reservation.startTime.minute,
+                                          " ",
+                                          "-",
+                                          " ",
+                                          reservation.endTime.hour,
+                                          ":",
+                                          reservation.endTime.minute
+                                        ].join(),
+                                        reservation.buildingId,
+                                        reservation.reservedFor.company,
+                                        context))
+                                .toList()),
+                      ),
+                    ],
+                  )),
+            );
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DesksOverview()),
+          );
+        },
+        backgroundColor: const Color(0xFF1E222D),
+        elevation: 1,
+        child: Image.asset('assets/images/plus-solid.png'),
+      ),
+    );
   }
 }
