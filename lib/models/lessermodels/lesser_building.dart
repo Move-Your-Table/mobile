@@ -1,5 +1,3 @@
-import 'package:myt_mobile/models/building.dart';
-
 class LesserBuilding {
   final int id;
   final String name;

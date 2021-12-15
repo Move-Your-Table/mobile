@@ -1,7 +1,6 @@
 import 'package:myt_mobile/models/lessermodels/lesser_building.dart';
 import 'package:myt_mobile/models/lessermodels/lesser_desk.dart';
 import 'package:myt_mobile/models/lessermodels/lesser_room.dart';
-import 'package:myt_mobile/models/person.dart';
 
 class LesserReservation {
   final int id;

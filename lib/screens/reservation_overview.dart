@@ -133,7 +133,7 @@ class ReservationOverview extends StatelessWidget {
             List<Reservation> reservations = snapshot.data as List<Reservation>;
             return SafeArea(
               child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
+                  padding: const EdgeInsetsDirectional.fromSTEB(28, 28, 0, 28),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -155,6 +155,7 @@ class ReservationOverview extends StatelessWidget {
                             children: reservations
                                 .map((Reservation reservation) =>
                                     _reservationItem(
+                                        reservation,
                                         [
                                           reservation.endTime.day,
                                           "/",
@@ -172,7 +173,7 @@ class ReservationOverview extends StatelessWidget {
                                           ":",
                                           reservation.endTime.minute
                                         ].join(),
-                                        reservation.buildingId,
+                                        reservation.building.name,
                                         reservation.reservedFor.company,
                                         context))
                                 .toList()),
