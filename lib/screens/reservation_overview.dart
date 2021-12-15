@@ -155,6 +155,7 @@ class ReservationOverview extends StatelessWidget {
                             children: reservations
                                 .map((Reservation reservation) =>
                                     _reservationItem(
+                                        reservation,
                                         [
                                           reservation.endTime.day,
                                           "/",
@@ -172,7 +173,7 @@ class ReservationOverview extends StatelessWidget {
                                           ":",
                                           reservation.endTime.minute
                                         ].join(),
-                                        reservation.buildingId,
+                                        reservation.building.name,
                                         reservation.reservedFor.company,
                                         context))
                                 .toList()),
