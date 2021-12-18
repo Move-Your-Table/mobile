@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/models/desk.dart';
@@ -80,6 +79,25 @@ class HttpService {
       return desk;
     } else {
       throw res.statusCode;
+    }
+  }
+
+  Future addReservation(String userId, String buildingId, String roomName,
+      String deskName, String startTime, String endTime) async {
+    Response res = await post(Uri.parse(gatewayUrl + "rest/reservations/"),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode(<String, String>{
+          'userId': userId,
+          'buildingId': buildingId,
+          'roomName': roomName,
+          'deskName': deskName,
+          'startTime': startTime,
+          'endTime': endTime
+        }));
+    if (res.statusCode == 200) {
+      return res.statusCode;
+    } else {
+      throw (res.statusCode);
     }
   }
 

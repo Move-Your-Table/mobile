@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myt_mobile/services/http_service.dart';
 import 'package:myt_mobile/models/reservation.dart';
-import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/screens/reservation_details.dart';
 import 'package:myt_mobile/screens/desks_overview.dart';
 

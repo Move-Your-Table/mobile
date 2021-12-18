@@ -6,6 +6,7 @@ import 'package:myt_mobile/models/desk.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myt_mobile/screens/reservation_overview.dart';
+import 'package:myt_mobile/services/http_service.dart';
 
 class NewReservation extends StatefulWidget {
   const NewReservation({Key? key, required this.desk}) : super(key: key);
@@ -16,6 +17,7 @@ class NewReservation extends StatefulWidget {
 }
 
 class _NewReservationState extends State<NewReservation> {
+  HttpService httpService = HttpService();
   String timeStart = "select start time";
   String timeEnd = "select end time";
   DateTime startMin = DateTime.now();
@@ -346,9 +348,16 @@ class _NewReservationState extends State<NewReservation> {
         )));
   }
 
-  _validateDates() {
+  _validateDates() async {
     if (timeStartSub != "" && timeEndSub != "") {
       if (DateTime.parse(timeEndSub).isAfter(DateTime.parse(timeStartSub))) {
+        await httpService.addReservation(
+            "61b711b7160d8033a7e850b9",
+            widget.desk.buildingId,
+            widget.desk.roomName,
+            widget.desk.deskName,
+            timeStartSub,
+            timeEndSub);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => ReservationOverview()),
