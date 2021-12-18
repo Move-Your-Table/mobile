@@ -15,7 +15,7 @@ class DesksOverview extends StatelessWidget {
         backgroundColor: const Color(0xFF161A20),
         body: SafeArea(
             child: SingleChildScrollView(
-          child: _roomCollection("61bc971bc96da12f0a52f0a6", context),
+          child: _roomCollection("61bd187826b85672f07e89c7", context),
         )));
   }
 
@@ -36,7 +36,7 @@ class DesksOverview extends StatelessWidget {
                           _roomCard(room),
                           FutureBuilder(
                             future: httpService.getDesksFromRoom(
-                                buildingId, room.id),
+                                buildingId, room.name),
                             builder: (BuildContext context,
                                 AsyncSnapshot<List<Desk>> deskSnapshot) {
                               if (!deskSnapshot.hasData) {

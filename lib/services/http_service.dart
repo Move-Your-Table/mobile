@@ -45,11 +45,12 @@ class HttpService {
         gatewayUrl + "rest/building/" + buildingId.toString() + "/room"));
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
+      log(body.toString());
       List<Room> rooms =
           body.map((dynamic item) => Room.fromJson(item)).toList();
       return rooms;
     } else {
-      throw res.statusCode;
+      throw res.body;
     }
   }
 
