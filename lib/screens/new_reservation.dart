@@ -165,9 +165,8 @@ class _NewReservationState extends State<NewReservation> {
                                               minTime: startMin,
                                               maxTime: startMax
                                                   .add(const Duration(days: 7)),
-                                              onChanged: (dateTime) {
-                                            log(dateTime.toIso8601String());
-                                          }, onConfirm: (date) {
+                                              onChanged: (dateTime) {},
+                                              onConfirm: (date) {
                                             setState(() {
                                               timeStart = [
                                                 date.day,
@@ -287,9 +286,8 @@ class _NewReservationState extends State<NewReservation> {
                                                           FontWeight.bold)),
                                               minTime: endMin,
                                               maxTime: endMax,
-                                              onChanged: (time) {
-                                            log(time.toString());
-                                          }, onConfirm: (date) {
+                                              onChanged: (time) {},
+                                              onConfirm: (date) {
                                             setState(() {
                                               timeEnd = [
                                                 date.day,
