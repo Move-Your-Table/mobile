@@ -97,11 +97,11 @@ class ReservationOverview extends StatelessWidget {
                               color: Color(0xFF8A8D8F),
                             ))),
                   ),
-                  const Align(
-                    alignment: AlignmentDirectional(-1, 0),
+                  Align(
+                    alignment: const AlignmentDirectional(-1, 0),
                     child: Text(
-                      "company",
-                      style: TextStyle(
+                      reservation.desk.name,
+                      style: const TextStyle(
                         fontFamily: 'Poppins',
                         color: Color(0xFF8A8D8F),
                       ),
@@ -156,21 +156,25 @@ class ReservationOverview extends StatelessWidget {
                                     _reservationItem(
                                         reservation,
                                         [
-                                          reservation.endTime.day,
+                                          reservation.startTime.day,
                                           "/",
-                                          reservation.endTime.month,
+                                          reservation.startTime.month,
+                                          "/",
+                                          reservation.startTime.year,
                                           " ",
-                                          "-",
-                                          " ",
-                                          reservation.startTime.hour,
+                                          reservation.startTime.hour > 9
+                                              ? reservation.startTime.hour
+                                              : [
+                                                  "0",
+                                                  reservation.startTime.hour
+                                                ].join(),
                                           ":",
-                                          reservation.startTime.minute,
-                                          " ",
-                                          "-",
-                                          " ",
-                                          reservation.endTime.hour,
-                                          ":",
-                                          reservation.endTime.minute
+                                          reservation.startTime.minute > 9
+                                              ? reservation.startTime.minute
+                                              : [
+                                                  "0",
+                                                  reservation.startTime.minute
+                                                ].join()
                                         ].join(),
                                         reservation.building.name,
                                         context))

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class LesserBuilding {
   final String id;
   final String name;
