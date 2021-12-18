@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myt_mobile/models/reservation.dart';
 import 'package:myt_mobile/models/desk.dart';
+import 'package:myt_mobile/screens/reservation_overview.dart';
 import 'package:myt_mobile/services/http_service.dart';
 
 class ReservationDetails extends StatelessWidget {
@@ -112,13 +113,18 @@ class ReservationDetails extends StatelessWidget {
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),
-                          onPressed: () => {
-                            httpService.deleteReservation(
+                          onPressed: () async => {
+                            await httpService.deleteReservation(
                                 reservation.id,
                                 reservation.building.id,
                                 reservation.room.name,
                                 reservation.desk.name),
-                            Navigator.pop(context)
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ReservationOverview()),
+                                (route) => false)
                           },
                         )),
                   ],
