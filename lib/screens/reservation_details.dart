@@ -113,7 +113,11 @@ class ReservationDetails extends StatelessWidget {
                                 fontWeight: FontWeight.bold),
                           ),
                           onPressed: () => {
-                            httpService.deleteReservation(reservation.id),
+                            httpService.deleteReservation(
+                                reservation.id,
+                                reservation.building.id,
+                                reservation.room.name,
+                                reservation.desk.name),
                             Navigator.pop(context)
                           },
                         )),

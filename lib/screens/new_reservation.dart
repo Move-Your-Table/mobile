@@ -39,7 +39,7 @@ class NewReservation extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            desk.name,
+                            desk.deskName,
                             style: const TextStyle(
                                 fontFamily: 'Nunito',
                                 color: Colors.white,

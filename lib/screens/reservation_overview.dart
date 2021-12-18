@@ -11,7 +11,7 @@ class ReservationOverview extends StatelessWidget {
   ReservationOverview({Key? key}) : super(key: key);
 
   Widget _reservationItem(Reservation reservation, String time,
-      String buildingName, String company, BuildContext context) {
+      String buildingName, BuildContext context) {
     return Container(
       width: 280,
       height: 280,
@@ -98,11 +98,11 @@ class ReservationOverview extends StatelessWidget {
                               color: Color(0xFF8A8D8F),
                             ))),
                   ),
-                  Align(
-                    alignment: const AlignmentDirectional(-1, 0),
+                  const Align(
+                    alignment: AlignmentDirectional(-1, 0),
                     child: Text(
-                      company,
-                      style: const TextStyle(
+                      "company",
+                      style: TextStyle(
                         fontFamily: 'Poppins',
                         color: Color(0xFF8A8D8F),
                       ),
@@ -174,7 +174,6 @@ class ReservationOverview extends StatelessWidget {
                                           reservation.endTime.minute
                                         ].join(),
                                         reservation.building.name,
-                                        reservation.reservedFor.company,
                                         context))
                                 .toList()),
                       ),

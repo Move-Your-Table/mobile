@@ -2,7 +2,7 @@ import 'package:myt_mobile/models/desksdata.dart';
 import 'package:myt_mobile/models/roomsdata.dart';
 
 class Building {
-  final int id;
+  final String id;
   final String name;
   final String street;
   final String city;
@@ -23,7 +23,7 @@ class Building {
 
   factory Building.fromJson(Map<String, dynamic> json) {
     return Building(
-        id: json['id'] as int,
+        id: json['id'] as String,
         name: json['name'] as String,
         street: json['street'] as String,
         city: json['city'] as String,

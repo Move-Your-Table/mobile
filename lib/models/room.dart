@@ -1,6 +1,6 @@
 class Room {
-  final int id;
-  final int buildingId;
+  final String id;
+  final String buildingId;
   final String name;
   final String type;
   final int incidents;
@@ -20,8 +20,8 @@ class Room {
 
   factory Room.fromJson(Map<String, dynamic> json) {
     return Room(
-        id: json['id'] as int,
-        buildingId: json['buildingId'] as int,
+        id: json['id'] as String,
+        buildingId: json['buildingId'] as String,
         name: json['name'] as String,
         type: json['type'] as String,
         incidents: json['incidents'] as int,
