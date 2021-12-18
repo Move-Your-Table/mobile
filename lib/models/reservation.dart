@@ -23,7 +23,6 @@ class Reservation {
   });
 
   factory Reservation.fromJson(Map<String, dynamic> json) {
-    log(json.toString());
     return Reservation(
         id: json["id"] as String,
         building: LesserBuilding.fromJson(json['building']),

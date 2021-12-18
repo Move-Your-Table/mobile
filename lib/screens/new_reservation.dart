@@ -1,11 +1,29 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myt_mobile/models/desk.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myt_mobile/screens/reservation_overview.dart';
 
-class NewReservation extends StatelessWidget {
+class NewReservation extends StatefulWidget {
   const NewReservation({Key? key, required this.desk}) : super(key: key);
   final Desk desk;
+
+  @override
+  _NewReservationState createState() => _NewReservationState();
+}
+
+class _NewReservationState extends State<NewReservation> {
+  String timeStart = "select start time";
+  String timeEnd = "select end time";
+  DateTime startMin = DateTime.now();
+  DateTime endMin = DateTime.now();
+  DateTime startMax = DateTime.now().add(const Duration(days: 7));
+  DateTime endMax = DateTime.now().add(const Duration(days: 7));
+  String timeStartSub = "";
+  String timeEndSub = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +57,7 @@ class NewReservation extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            desk.deskName,
+                            widget.desk.deskName,
                             style: const TextStyle(
                                 fontFamily: 'Nunito',
                                 color: Colors.white,
@@ -94,7 +112,7 @@ class NewReservation extends StatelessWidget {
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Text(
-                                                    "Timestamp",
+                                                    timeStart,
                                                     style: TextStyle(
                                                         color:
                                                             Colors.grey[400]),
@@ -124,9 +142,10 @@ class NewReservation extends StatelessWidget {
                                           color: Colors.black,
                                           size: 28.0,
                                           semanticLabel:
-                                              'button to select date',
+                                              "button to make select start time",
                                         ),
                                         onPressed: () {
+                                          // START TIME
                                           DatePicker.showDateTimePicker(context,
                                               showTitleActions: true,
                                               theme: DatePickerTheme(
@@ -141,13 +160,31 @@ class NewReservation extends StatelessWidget {
                                                           .orange.shade900,
                                                       fontWeight:
                                                           FontWeight.bold)),
-                                              minTime: DateTime.now(),
-                                              maxTime: DateTime.now()
+                                              minTime: startMin,
+                                              maxTime: startMax
                                                   .add(const Duration(days: 7)),
-                                              onChanged: (date) {
-                                            print('change $date');
+                                              onChanged: (dateTime) {
+                                            log(dateTime.toIso8601String());
                                           }, onConfirm: (date) {
-                                            print('confirm $date');
+                                            setState(() {
+                                              timeStart = [
+                                                date.day,
+                                                "/",
+                                                date.month,
+                                                "/",
+                                                date.year,
+                                                " ",
+                                                date.hour > 9
+                                                    ? date.hour
+                                                    : ["0", date.hour].join(),
+                                                ":",
+                                                date.minute > 9
+                                                    ? date.minute
+                                                    : ["0", date.minute].join()
+                                              ].join();
+                                              timeStartSub =
+                                                  date.toIso8601String();
+                                            });
                                           },
                                               currentTime: DateTime.now(),
                                               locale: LocaleType.en);
@@ -199,7 +236,7 @@ class NewReservation extends StatelessWidget {
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Text(
-                                                    "Timestamp",
+                                                    timeEnd,
                                                     style: TextStyle(
                                                         color:
                                                             Colors.grey[400]),
@@ -246,13 +283,30 @@ class NewReservation extends StatelessWidget {
                                                           .orange.shade900,
                                                       fontWeight:
                                                           FontWeight.bold)),
-                                              minTime: DateTime.now(),
-                                              maxTime: DateTime.now()
-                                                  .add(const Duration(days: 7)),
-                                              onChanged: (date) {
-                                            print('change $date');
+                                              minTime: endMin,
+                                              maxTime: endMax,
+                                              onChanged: (time) {
+                                            log(time.toString());
                                           }, onConfirm: (date) {
-                                            print('confirm $date');
+                                            setState(() {
+                                              timeEnd = [
+                                                date.day,
+                                                "/",
+                                                date.month,
+                                                "/",
+                                                date.year,
+                                                " ",
+                                                date.hour > 9
+                                                    ? date.hour
+                                                    : ["0", date.hour].join(),
+                                                ":",
+                                                date.minute > 9
+                                                    ? date.minute
+                                                    : ["0", date.minute].join()
+                                              ].join();
+                                              timeEndSub =
+                                                  date.toIso8601String();
+                                            });
                                           },
                                               currentTime: DateTime.now(),
                                               locale: LocaleType.en);
@@ -286,9 +340,31 @@ class NewReservation extends StatelessWidget {
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () => {},
+                  onPressed: () => {_validateDates()},
                 )),
           ],
         )));
+  }
+
+  _validateDates() {
+    if (timeStartSub != "" && timeEndSub != "") {
+      if (DateTime.parse(timeEndSub).isAfter(DateTime.parse(timeStartSub))) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => ReservationOverview()),
+            (route) => false);
+      } else {
+        Fluttertoast.showToast(
+          msg:
+              "Please make sure your reservation end comes after reservation start.",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.red.shade500,
+        );
+      }
+    } else {
+      Fluttertoast.showToast(
+          toastLength: Toast.LENGTH_LONG,
+          msg: "Please make sure reservation start AND end are selected.");
+    }
   }
 }

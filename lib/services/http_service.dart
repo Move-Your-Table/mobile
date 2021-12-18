@@ -45,7 +45,6 @@ class HttpService {
         gatewayUrl + "rest/building/" + buildingId.toString() + "/room"));
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
-      log(body.toString());
       List<Room> rooms =
           body.map((dynamic item) => Room.fromJson(item)).toList();
       return rooms;
@@ -77,11 +76,9 @@ class HttpService {
         deskId.toString()));
     if (res.statusCode == 200) {
       dynamic body = jsonDecode(res.body);
-      log(res.request.toString());
       Desk desk = Desk.fromJson(body);
       return desk;
     } else {
-      log("oops");
       throw res.statusCode;
     }
   }
@@ -99,8 +96,7 @@ class HttpService {
     if (res.statusCode == 200) {
       return res.statusCode;
     } else {
-      log(res.request.toString());
-      log(res.body);
+      throw (res.statusCode);
     }
   }
 }
