@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myt_mobile/services/http_service.dart';
 import 'package:myt_mobile/models/reservation.dart';
-import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/screens/reservation_details.dart';
 import 'package:myt_mobile/screens/desks_overview.dart';
 
@@ -11,7 +10,7 @@ class ReservationOverview extends StatelessWidget {
   ReservationOverview({Key? key}) : super(key: key);
 
   Widget _reservationItem(Reservation reservation, String time,
-      String buildingName, String company, BuildContext context) {
+      String buildingName, BuildContext context) {
     return Container(
       width: 280,
       height: 280,
@@ -101,7 +100,7 @@ class ReservationOverview extends StatelessWidget {
                   Align(
                     alignment: const AlignmentDirectional(-1, 0),
                     child: Text(
-                      company,
+                      reservation.desk.name,
                       style: const TextStyle(
                         fontFamily: 'Poppins',
                         color: Color(0xFF8A8D8F),
@@ -157,24 +156,27 @@ class ReservationOverview extends StatelessWidget {
                                     _reservationItem(
                                         reservation,
                                         [
-                                          reservation.endTime.day,
+                                          reservation.startTime.day,
                                           "/",
-                                          reservation.endTime.month,
+                                          reservation.startTime.month,
+                                          "/",
+                                          reservation.startTime.year,
                                           " ",
-                                          "-",
-                                          " ",
-                                          reservation.startTime.hour,
+                                          reservation.startTime.hour > 9
+                                              ? reservation.startTime.hour
+                                              : [
+                                                  "0",
+                                                  reservation.startTime.hour
+                                                ].join(),
                                           ":",
-                                          reservation.startTime.minute,
-                                          " ",
-                                          "-",
-                                          " ",
-                                          reservation.endTime.hour,
-                                          ":",
-                                          reservation.endTime.minute
+                                          reservation.startTime.minute > 9
+                                              ? reservation.startTime.minute
+                                              : [
+                                                  "0",
+                                                  reservation.startTime.minute
+                                                ].join()
                                         ].join(),
                                         reservation.building.name,
-                                        reservation.reservedFor.company,
                                         context))
                                 .toList()),
                       ),

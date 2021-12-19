@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:myt_mobile/models/building.dart';
 import 'package:myt_mobile/models/desk.dart';
@@ -11,19 +10,19 @@ class HttpService {
   final String gatewayUrl = "http://10.0.2.2:8080/";
 
   Future<List<Reservation>> getReservations() async {
-    Response res =
-        await get(Uri.parse(gatewayUrl + "rest/reservations?userId=3"));
+    Response res = await get(Uri.parse(
+        gatewayUrl + "rest/reservations?userId=61b711b7160d8033a7e850b9"));
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
       List<Reservation> reservations =
           body.map((dynamic item) => Reservation.fromJson(item)).toList();
       return reservations;
     } else {
-      throw res.statusCode;
+      throw res.body.toString();
     }
   }
 
-  Future<List<Desk>> getDesksFromRoom(int buildingId, int roomId) async {
+  Future<List<Desk>> getDesksFromRoom(String buildingId, String roomId) async {
     Response res = await get(Uri.parse(gatewayUrl +
         "rest/building/" +
         buildingId.toString() +
@@ -40,7 +39,7 @@ class HttpService {
     }
   }
 
-  Future<List<Room>> getRoomsFromBuilding(int buildingId) async {
+  Future<List<Room>> getRoomsFromBuilding(String buildingId) async {
     Response res = await get(Uri.parse(
         gatewayUrl + "rest/building/" + buildingId.toString() + "/room"));
     if (res.statusCode == 200) {
@@ -49,11 +48,11 @@ class HttpService {
           body.map((dynamic item) => Room.fromJson(item)).toList();
       return rooms;
     } else {
-      throw res.statusCode;
+      throw res.body;
     }
   }
 
-  Future<Building> getBuildingByID(int id) async {
+  Future<Building> getBuildingByID(String id) async {
     Response res =
         await get(Uri.parse(gatewayUrl + "rest/buildings/" + id.toString()));
     if (res.statusCode == 200) {
@@ -65,7 +64,8 @@ class HttpService {
     }
   }
 
-  Future<Desk> getDeskById(int buildingId, int roomId, int deskId) async {
+  Future<Desk> getDeskById(
+      String buildingId, String roomId, String deskId) async {
     Response res = await get(Uri.parse(gatewayUrl +
         "rest/building/" +
         buildingId.toString() +
@@ -78,19 +78,43 @@ class HttpService {
       Desk desk = Desk.fromJson(body);
       return desk;
     } else {
-      log("oops");
       throw res.statusCode;
     }
   }
 
-  Future deleteReservation(int reservationId) async {
-    Response res = await delete(Uri.parse(
-        gatewayUrl + "rest/reservations/" + reservationId.toString()));
+  Future addReservation(String userId, String buildingId, String roomName,
+      String deskName, String startTime, String endTime) async {
+    Response res = await post(Uri.parse(gatewayUrl + "rest/reservations/"),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode(<String, String>{
+          'userId': userId,
+          'buildingId': buildingId,
+          'roomName': roomName,
+          'deskName': deskName,
+          'startTime': startTime,
+          'endTime': endTime
+        }));
     if (res.statusCode == 200) {
       return res.statusCode;
     } else {
-      log(res.request.toString());
-      log(res.statusCode.toString());
+      throw (res.statusCode);
+    }
+  }
+
+  Future deleteReservation(String reservationId, String buildingId,
+      String roomName, String deskName) async {
+    Response res = await delete(
+        Uri.parse(gatewayUrl + "rest/reservations/" + reservationId.toString()),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode(<String, String>{
+          'buildingId': buildingId,
+          'roomName': roomName,
+          'deskName': deskName
+        }));
+    if (res.statusCode == 200) {
+      return res.statusCode;
+    } else {
+      throw (res.statusCode);
     }
   }
 }

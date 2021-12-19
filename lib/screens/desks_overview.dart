@@ -15,11 +15,11 @@ class DesksOverview extends StatelessWidget {
         backgroundColor: const Color(0xFF161A20),
         body: SafeArea(
             child: SingleChildScrollView(
-          child: _roomCollection(1, context),
+          child: _roomCollection("61be7293ce271e6abca5a658", context),
         )));
   }
 
-  Widget _roomCollection(int buildingId, BuildContext context) {
+  Widget _roomCollection(String buildingId, BuildContext context) {
     return FutureBuilder(
         future: httpService.getRoomsFromBuilding(buildingId),
         builder: (BuildContext context, AsyncSnapshot<List<Room>> snapshot) {
@@ -36,7 +36,7 @@ class DesksOverview extends StatelessWidget {
                           _roomCard(room),
                           FutureBuilder(
                             future: httpService.getDesksFromRoom(
-                                buildingId, room.id),
+                                buildingId, room.name),
                             builder: (BuildContext context,
                                 AsyncSnapshot<List<Desk>> deskSnapshot) {
                               if (!deskSnapshot.hasData) {
@@ -105,7 +105,7 @@ class DesksOverview extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            desk.name,
+                            desk.deskName,
                             style: const TextStyle(
                               fontFamily: 'Nunito',
                               color: Colors.white,

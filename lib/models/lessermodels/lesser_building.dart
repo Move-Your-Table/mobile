@@ -1,10 +1,11 @@
 class LesserBuilding {
-  final int id;
+  final String id;
   final String name;
 
   LesserBuilding({required this.id, required this.name});
 
   factory LesserBuilding.fromJson(Map<String, dynamic> json) {
-    return LesserBuilding(id: json['id'] as int, name: json['name'] as String);
+    return LesserBuilding(
+        id: json['id'] as String, name: json['name'] as String);
   }
 }

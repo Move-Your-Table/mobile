@@ -3,7 +3,7 @@ import 'package:myt_mobile/models/lessermodels/lesser_desk.dart';
 import 'package:myt_mobile/models/lessermodels/lesser_room.dart';
 
 class LesserReservation {
-  final int id;
+  final String id;
   final LesserBuilding building;
   final LesserRoom room;
   final LesserDesk desk;
@@ -20,7 +20,7 @@ class LesserReservation {
 
   factory LesserReservation.fromJson(Map<String, dynamic> json) {
     return LesserReservation(
-        id: json["id"] as int,
+        id: json["id"] as String,
         building: LesserBuilding.fromJson(json['building']),
         room: LesserRoom.fromJson(json["room"]),
         desk: LesserDesk.fromJson(json["desk"]),
